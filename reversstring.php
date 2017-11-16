@@ -17,3 +17,14 @@ while((@$str[$x-1])!=null){
         echo $str[$x-1];
 $x--;
 }
+
+//method two
+$string = 'zeeshan';
+$reverse = '';
+$i = 0;
+while(!empty($string[$i])){ 
+      $reverse = $string[$i].$reverse; 
+      $i++;
+     // echo $reverse;
+}
+echo $reverse;
