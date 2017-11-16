@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript">
+            function person(age,name){
+                this.age=age;
+                this.name=name;
+                this.yearRemaing=getYearleft;
+            }
+            function getYearleft(){
+                var yearLeft= 65 - this.age;
+                return yearLeft;
+                
+            }
+          
+            
+        </script>
+    </head>
+    <body>
+        <div>TODO write content</div>
+        <script type="text/javascript">
+            var girl='nataliea';
+            var first='ayazz';
+            var last='muhammad';
+            if((first=='ayaz') && (last=='muhammad')){
+                document.write('hy this is great condiation');
+            }
+            if((first=='ayaz') || (last=='muhammad')){
+                document.write('muhammad hy');
+            }
+            switch(girl){
+                case "natalie":
+                    document.write('you must be nathali');
+                    break;
+                case "ashly":
+                    document.write('you must ashly');
+                    break;
+                default:
+                document.write('default value');
+            }
+            
+            //for loop
+            for(x=0;x<10;x++){
+                document.write('rebecca black <br>' + x);
+            }
+               //while loop
+               a=0;
+               while(a < 10){
+                    document.write(a+' rebecca black <br>');
+                   a++;
+               }
+               //do while loop
+               x=5;
+               do{
+                   document.write( x +'ahlo <br>');
+                   x++;
+               }while(x < 15);
+               
+               
+               //object oriented js
+                //ayaz is an object and name is a propeerty of person object
+                var ayaz=new person('35', 'ayaz');
+                document.write(ayaz.name);
+               document.write(ayaz.age);
+               document.write("<br>--- year remaning---"+ayaz.yearRemaing());
+               
+               //object initilizers
+               bucky={name:"buky roberts", age:24};
+               taylor={name:'tayler switch',age:20};
+               document.write(bucky.name +'-age-'+bucky.age+ "----"+ taylor.name)
+               //adding methods to the object
+               
+               //array in javascript
+                var people= new Array('ayaz','fahad','ghyas','aftab','javed');
+                
+                document.write('<br>'+people[3]);
+                
+                var i;
+           for ( i=0; i< people.length ; i++ ){
+               document.write('<br>'+people[i]);
+           }
+           //other way to create array
+           
+               var things= new Array(3);
+               things[0]='first array 1';
+               things[1]='first array 2';
+               things[2]='first array 3';
+               
+               document.write(things[2]);
+               
+               //other way to create array here we dont give vaue to array its empty like above we have Array(3) here we have Array() 
+               var staff= new Array();
+               staff[0]='first array 1';
+               staff[1]='first array 2';
+               staff[2]='first array 3';
+               //here we can have as many array element as we want.
+               
+               //array properties and methods.
+               
+              var dude= new Array('bucky',"ban","randy");
+              var chicks= new Array('lisa',"erin","hannah");
+               //array is an object here is one propert of othe array is
+              document.write(dude.length);
+              //here is a method of the array which combie two arrays
+              
+              var pep=dude.concat(chicks);
+                     var i;
+           for ( i=0; i< pep.length ; i++ ){
+               document.write('<br>'+pep[i]);
+           }
+               //join conversts array elements to string and pop remove last element from the array
+              document.write('<br>'+dude.join());
+              //it can take seprator default is quma
+              document.write('<br>'+dude.join(':'));
+              //array pop here last elment is "randy"
+              document.write('<br>'+dude[2]);
+              document.write(dude.pop());
+              //here after pop last elment "randy " is undefined
+              document.write('<br>'+dude[2]);   
+              
+              //reverse, push, sort method of array
+              var arrBody=new Array('head','arms','legs','foot','fingurs');
+              var string1=arrBody.join();
+                document.write('<br> Normal arrray array--<br>'+string1);
+              //reversing order of 
+              document.write('<br> Reverse array--<br>'+arrBody.reverse());
+              //pushing array
+              arrBody.push('chest','sholder','neck');
+                var string2=arrBody.join();
+                      document.write('<br> after push arrray --<br>'+string2);
+              //sorting array
+                document.write('<br> sorted array--<br>'+arrBody.sort());
+                
+                //associative array
+                var bucky1=new Array();
+                bucky1['color']='blue';
+                bucky1['food']='dal chawal';
+                //bucky1['color']='blue';
+                
+               document.write('<br> my fevrate food is--<br>'+bucky1['food']);
+               //math objects
+               
+               var testNo= 144;
+               var sqrRoot=Math.sqrt(testNo);
+              document.write('<br>squre root of 144 is'+sqrRoot); 
+              
+              //create 
+              
+              function doSomething(){
+                  //document.write(' Ayaz M ');
+              }
+              // set intervel
+              //setInterval('doSomething()',5000);
+              function getTime(){
+                  var getT= new Date();
+                  var hours=getT.getHours();
+                  var minuts=getT.getMinutes();
+                  var second=getT.getSeconds();
+                  //document.write('Hours:'+hours+" Minuts:"+minuts+" seconds:"+second+" <br>");
+              document.getElementById('time').innerHTML=hours+" : "+minuts+" : "+second;
+    }
+             setInterval('getTime()',1000);
+             
+              
+               //forms in javascript
+           
+        </script>
+        <div id="time"></div>
+        <form name="ayazForm" id="ayazForm">
+            <input type="text" name="name" class="" value="great">
+            <input type="text" name="phone">
+            <input type="submit" name="submit" >
+            
+        </form>
+        <form name="yourForm">
+            <input type="text" name="name" class="">
+            <input type="text" name="phone">
+            <input type="submit" name="submit" >
+            
+        </form>
+      
+    </body>
+    
+</html>
+<script type="text/javascript">
+        var x= document.forms.length;
+var xn=document.forms[0].elements[0].name;
+    alert(xn);
+               alert('test');
+</script>

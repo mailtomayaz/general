@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link href="css/bootstrap.css" rel="stylesheet">
+     <link href="css/slidercss.css" rel="stylesheet">
+    <script type="text/javascript" src="js/jquery-1.10.1.min.js"> </script>
+<!-- Bootstrap -->
+<script type="text/javascript" src="js/bootstrap.js"></script>
+<!-- Bootstrap TabCollapse-->
+<script>
+jQuery(document).ready(function() {
+        
+	jQuery('.carousel[data-type="multi"] .item').each(function(){
+		var next = jQuery(this).next();
+		if (!next.length) {
+			next = jQuery(this).siblings(':first');
+		}
+		next.children(':first-child').clone().appendTo(jQuery(this));
+	  
+		for (var i=0;i<2;i++) {
+			next=next.next();
+			if (!next.length) {
+				next = jQuery(this).siblings(':first');
+			}
+			next.children(':first-child').clone().appendTo($(this));
+		}
+	});
+        
+});
+</script>
+
+    </head>
+  
+    <body>
+        <div class="container">
+<h1>Bootstrap Multiple image sliding demo</h1>
+<!--The main div for carousel-->
+<div class="container text-center">
+<div class="carousel slide row" data-ride="carousel" data-type="multi" data-interval="4000" id="fruitscarousel">
+
+    <div class="carousel-inner">
+        <div class="item active">
+            <div class="col-md-3 col-sm-4 col-xs-12"><a href="#"><img src="images/banana.jpg" class="img-responsive"></a></div>
+        </div>
+        <div class="item">
+            <div class="col-md-3 col-sm-4 col-xs-12"><a href="#"><img src="images/currant.jpg" class="img-responsive"></a></div>
+        </div>
+        <div class="item">
+            <div class="col-md-3 col-sm-4 col-xs-12"><a href="#"><img src="images/mango.jpg" class="img-responsive"></a></div>
+        </div>
+        <div class="item">
+            <div class="col-md-3 col-sm-4 col-xs-12"><a href="#"><img src="images/strawberries.jpg" class="img-responsive"></a></div>
+        </div>
+        <div class="item">
+            <div class="col-md-3 col-sm-4 col-xs-12"><a href="#"><img src="images/banana.jpg" class="img-responsive"></a></div>
+        </div>
+        <div class="item">
+            <div class="col-md-3 col-sm-4 col-xs-12"><a href="#"><img src="images/currant.jpg" class="img-responsive"></a></div>
+        </div>
+    </div>
+
+    <a class="left carousel-control" href="#fruitscarousel" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
+    <a class="right carousel-control" href="#fruitscarousel" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a> 
+
+</div>
+</div>
+ 
+
+</div>
+
+
+    </body>
+</html>

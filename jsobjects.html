@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Js Objects and Components</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>Js Objects and Components look at console </div>
+    </body>
+</html>
+<script type="text/javascript">
+    //method 1 creating object
+//create new object
+var simpleAlert = new Object();
+//add properties
+simpleAlert.sa_default="Hello world";
+simpleAlert.sa_error="Error.........";
+simpleAlert.sa_success="Success!.....";
+console.log(simpleAlert);
+alert(simpleAlert.sa_error);
+//method 2 creating objects with object initializers
+//create an object
+var simpleAlert2 = {
+    sa_default :"Hello World!",
+    sa_error :"Error ..",
+    sa_success : "Success!",
+    sa_fallback:function(){
+     console.log('fallback');   
+    }
+}
+console.log(simpleAlert2);
+console.log(simpleAlert2.sa_fallback());
+
+//method 3 creating object Using A Constructor Function
+
+function SimpleAlert(sa_default,sa_error,sa_success){
+    this.sa_default=sa_default;
+    this.sa_error=sa_error;
+    this.sa_sucess=sa_success;
+}
+
+var my_alert= new SimpleAlert('Hellow World',"Error ---", "Success");
+console.log(my_alert);
+console.log(my_alert.sa_error);
+
+</script>

@@ -1,0 +1,205 @@
+<?php 
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+//$category = $objectManager->get('Magento\Framework\Registry')->registry('current_category');
+ //echo $category->getId();
+  //  echo $category->getName();
+$blockObj= $block->getLayout()->createBlock('Espresso\Rcategory\Block\Category\View');
+
+$arrYear='';
+foreach($blockObj->getYearAttribute() as $year){
+    $arrYear[]=trim($year->getData('year')) ;
+}
+$temp = array();
+foreach( $arrYear as $key=>$item){
+    //echo "key---".$key."--item--".$item;
+    
+ if(!in_array($item, $temp)){
+      // echo $item;
+       $temp[] = $item;
+ }
+}
+//get model number dropdown
+foreach($blockObj->getModelAttribute() as $model){
+    $arrModel[]=trim($model->getData('model')) ;
+}
+$arrTempModel = array();
+foreach( $arrModel as $key=>$item){
+    //echo "key---".$key."--item--".$item;
+    
+ if(!in_array($item, $arrTempModel)){
+      // echo $item;
+       $arrTempModel[] = $item;
+ }
+}
+
+$categories = $block->getCategoryCollection(true, 2);
+//$subcats = $categories->getChildrenCategories();
+?>
+<div class="row searchtitlte">
+    <div class="col-lg-12">
+        <div class="col-lg-offset-3 col-sm-offset-3 col-sm-6 col-lg-6">
+                        <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('seach_module_text')->toHtml();?>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12 catproductsearchform">
+    <div class="col-lg-offset-3 col-sm-offset-3 col-sm-6 col-lg-6">
+        <form action="<?php echo $this->getUrl('searchfilter')?>" method="get" name="ProductSearchform" id="ProductSearchform">
+            
+            <div class="col-sm-12 col-lg-12 col-xs-12 styled-select">
+                <div class="custom-select">
+                    <input type="hidden" value="" name="catId" id="catId">
+                    <select name="catName" id="catName">  
+                        <option value="make">Make</option>
+                           
+            <?php 
+$categories = $block->getCategoryCollection(true, 2);
+foreach ($categories as $category) { 
+    if($category->getName() == "Default Category"){
+        continue;
+    }
+    echo '<option value='.$category->getId().'>'.$category->getName() . '</option>';
+}
+
+
+//                ?>
+                     </select>
+            </div>
+        
+            
+            </div>
+            <div class="col-sm-6 col-lg-6 col-xs-12 styled-select">
+                <div class="custom-select">
+                    <select name="model" class="selectbox" id="model">
+                        <option value="model">Model</option>
+                </select>
+                </div>
+            </div>
+            
+            
+            
+        <div class="col-sm-6 col-sm-6 col-xs-12 styled-select">
+            <div class="custom-select">
+                <select name="year" class="selectbox" id="year">
+                    <option value="year">Year</option>
+        </select>
+        </div>
+        </div>
+        <div class="col-sm-12 col-xs-12 text-center">
+            <input type="submit" value="submit" name="submitbtn" class="btn" id="productSearch">
+        </div>
+    </form>
+    </div>
+</div>
+<div id="search-overlay" class="col-xs-12" style="display: none;">
+    <div class="search-loader"></div>
+</div>
+<div class="" id="searchresult" >
+    
+    <?php echo $block->getName();?>
+</div>
+<script>
+    jQuery(function() {
+    jQuery('#ProductSearchform').on('submit', function(e){
+        e.preventDefault();
+        var text,text2,text3='';
+        var arrError=[];
+        var isModel = jQuery('#model').val();
+        var isYear = jQuery('#year').val();
+        var isMake = jQuery('#catName').val();
+        //   alert(isYear+"model");
+            if (isNaN(isMake)) {
+            //this.submit();
+            text='Please select Make';
+            arrError.push(text);
+        }
+        if (isNaN(isModel)) {
+            //this.submit();
+            //alert('Please select Model');
+              text2='Please select Model';
+            arrError.push(text2);
+        }
+         if (isNaN(isYear)) {
+            //this.submit();
+            //alert('Please select Year');
+            text3='Please select Year';
+            arrError.push(text3);
+        }
+       // check for non nomaric value 
+      if(isNaN(isYear) && isNaN(isModel) && isNaN(isMake)){
+          
+      }
+    //  alert(text+'\n'+text2+'\n'+text3+'\n');
+var errStr='';
+for (var i = 0; i < arrError.length; i++) {
+   errStr += arrError[i] +'\n';
+}
+if(errStr.length != 0){
+alert(errStr);
+}
+
+        if(!isNaN(isModel) && !isNaN(isYear) && !isNaN(isMake)){
+             this.submit();
+        }
+});
+});
+           //get catId
+    jQuery('#catName').change(function(){
+       
+         var option = jQuery('option:selected', this).attr('value');
+          //alert(option);
+          jQuery('#catId').val(option);
+         // alert(option);
+        //  jQuery( "#productSearch" ).trigger( "click" );
+         if (isNaN(option)) {
+            //this.submit();
+            //alert('Please select Year');
+            var msg='Please select valid value for the Make';
+            alert(msg);
+           // arrError.push(text3);
+        }else{
+          var search_url = '<?php echo $this->getUrl("searchfilter/index/display"); ?>';
+        //var data = jQuery('#ProductSearchform').serialize();
+       // data += '&lat=' + center.lat + "&lng=" + center.lng;
+       var data = 'catId='+option;
+        jQuery.ajax({
+            url: search_url,
+            cache: false,
+            type: 'POST',
+            data: data,
+            dataType: 'json',
+            success: function (data) {
+                // var json = jQuery.parseJSON(data);
+                  //alert(json); //it will alert controller data
+              // console.log(data.collection); 
+                //alert('success');
+               // jQuery('.results-wrapper').fadeIn();
+               // jQuery('#map_wrapper').addClass('results-map-wrapper');
+              //  center = data.center;
+               // listDealers(data.collection);
+               // console.log(markers);
+               // console.log(center);
+               // changeMapCenter(center, markers);
+              // console.log('here is result data');
+               jQuery('#year').html(data.yeardata);
+               jQuery('#model').html(data.modeldata);
+              // console.log(data);
+            },
+            complete: function () {
+               // alert('complete');
+                jQuery('#search-overlay').hide();
+            },
+            beforeSend: function(){
+                 jQuery('#search-overlay').show();
+            },
+            error:function(xhr, ajaxOptions, thrownError){
+                 
+                 console.log(xhr.status);
+                  console.log(thrownError);
+            }
+        });
+    }
+    });
+
+    </script>
+

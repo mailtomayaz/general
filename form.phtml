@@ -1,0 +1,190 @@
+<?php 
+$blockObjCat= $block->getLayout()->createBlock('Espresso\Searchfilter\Block\Searchsitewise');
+$blockObject2=$blockObjCat->getCategoryCollection(true, 2);
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$blockObj= $block->getLayout()->createBlock('Espresso\Rcategory\Block\Category\View');
+//get  model category
+$modelDropdown=$blockObj->getSubCat($block->getCatid(),'model');
+//get year category
+$yearDropDown=$blockObj->getSubCat($block->getCatid(),'years');
+?>
+<div class="row searchtitlte">
+    <div class="col-lg-12">
+        <div class="col-lg-offset-3 col-sm-offset-3 col-sm-6 col-lg-6">
+            <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('seach_module_text')->toHtml();?>
+        </div>
+    </div>
+</div>
+<div class=" catproductsearchform col-lg-offset-3 col-sm-offset-3 col-sm-6 col-lg-6" >
+<!--    <div class="col-lg-offset-3 col-sm-offset-3 col-sm-6 col-lg-6">
+       
+            
+            </div>-->
+           
+ <form action="" method="post" name="ProductSearchform" id="ProductSearchform">
+            <input type="hidden" value="<?php echo $block->getCatid(); ?>" name="catId" id="catId">
+            <div class="col-sm-6 col-lg-6 col-xs-12 styled-select">
+            <div class="custom-select">
+               <!-- <input type="hidden" value="<?php //echo $block->getCatid(); ?>" name="catId" id="catId"> -->
+                <select name="model" class="" id="productModel">
+                <option>Model</option>
+                  <?php  
+                  foreach ($modelDropdown as $att ){
+                      if( $att['id']== $block->getSelection()['model']){
+                            echo '<option selected="selected" value='.$att['id'].'>'.$att['name'].'</option>';
+                      }else{
+                      echo '<option value='.$att['id'].'>'.$att['name'].'</option>';
+                      }
+            }
+            
+            ?>
+        </select>
+            </div>
+            </div>
+        <div class="col-sm-6 col-sm-6 col-xs-12 styled-select">
+            <div class="custom-select">
+        <select name="year" class="selectbox" id="productYear">
+             <option>Year</option>
+           
+                     <?php  
+                  foreach ($yearDropDown as $att ){
+                //$modelDropdown
+                      if($att['id']== $block->getSelection()['year']){
+                       echo '<option selected="selected" value='.$att['id'].'>'.$att['name'].'</option>';   
+                      }else{
+                      echo '<option value='.$att['id'].'>'.$att['name'].'</option>';
+                      
+                      }
+            
+                      
+                      }
+            
+            ?>
+        
+        </select>
+        </div>
+        </div>
+        <div class="col-sm-12 col-xs-12 text-center">
+            <input type="button" value="submit" class="btn" id="productSearch">
+        </div>
+    </form> 
+</div>
+
+<div id="search-overlay" class="col-xs-12" style="display: none;">
+    <div class="search-loader"></div>
+</div>
+<div class="" id="searchresult" >
+    
+    <?php echo $block->getName();?>
+</div>
+
+<script>
+       //get catId
+    jQuery('#catName').change(function(){
+       
+         var option = jQuery('option:selected', this).attr('value');
+          //alert(option);
+          jQuery('#catId').val(option);
+          jQuery( "#productSearch" ).trigger( "click" );
+    });
+    
+    jQuery(function() {
+    jQuery('#productSearch').click(function(){
+       var text,text2,text3='';
+        var arrError=[];
+        var isModel = jQuery('#productModel').val();
+        var isYear = jQuery('#productYear').val();
+         // var isMake = jQuery('#catName').val();
+           if (isNaN(isModel)) {
+            //this.submit();
+            //alert('Please select Model');
+              text2='Please select Model';
+            arrError.push(text2);
+          
+        }
+         if (isNaN(isYear)) {
+            //this.submit();
+            //alert('Please select Year');
+            text3='Please select Year';
+            arrError.push(text3);
+          
+        }
+
+         var errStr='';
+for (var i = 0; i < arrError.length; i++) {
+   errStr += arrError[i] +'\n';
+}
+if(errStr.length != 0){
+  // jQuery( "#productSearch" ).trigger( "click" ); 
+      alert(errStr);
+    }
+else{
+    var search_url = '<?php echo $this->getUrl("categorysearch/category/filtercat"); ?>';  
+    var data = jQuery('#ProductSearchform').serialize();
+       // data += '&lat=' + center.lat + "&lng=" + center.lng;
+        jQuery.ajax({
+            url: search_url,
+            cache: false,
+            type: 'POST',
+            data: data,
+            dataType: 'json',
+            success: function (data) {
+               jQuery('#searchresult').html(data.collection);
+              // console.log(data);
+            },
+            complete: function () {
+               // alert('complete');
+                jQuery('#search-overlay').hide();
+            },
+            beforeSend: function(){
+                 jQuery('#search-overlay').show();
+            },
+            error:function(xhr, ajaxOptions, thrownError){
+                 alert(xhr.status);
+        alert(thrownError);
+            }
+        });
+   // alert(catId);
+   }
+  
+});
+
+jQuery(document).delegate(".catmenu","click",function(e){
+     e.preventDefault();
+       
+        var getId= jQuery(this).attr('id');   
+    var useId = jQuery('#catId').val(getId);
+  //  alert('test');
+          var text,text2,text3='';
+        var arrError=[];
+        var isModel = jQuery('#productModel').val();
+        var isYear = jQuery('#productYear').val();
+           if (isModel.toLowerCase() == 'model') {
+            //this.submit();
+            //alert('Please select Model');
+              text2='Please select Model';
+            arrError.push(text2);
+          
+        }
+         if (isYear.toLowerCase() == 'year') {
+            //this.submit();
+            //alert('Please select Year');
+            text3='Please select Year';
+            arrError.push(text3);
+          
+        }
+         var errStr='';
+for (var i = 0; i < arrError.length; i++) {
+   errStr += arrError[i] +'\n';
+}
+if(errStr.length == 0){
+   jQuery("#productSearch").trigger( "click" ); 
+    }
+if(errStr.length != 0){
+        alert(errStr);
+    }
+   jQuery('.catmenu').removeClass('active');
+     jQuery( this ).addClass('active');
+});
+});
+</script>

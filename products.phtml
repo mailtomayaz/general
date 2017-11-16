@@ -1,0 +1,349 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Category view template
+ *
+ * @var $block \Magento\Catalog\Block\Category\View
+ */
+?>
+<?php if (!$block->isContentMode() || $block->isMixedMode()): ?>
+    <?php //echo $block->getProductListHtml() ?>
+<?php endif; ?>
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$category = $objectManager->get('Magento\Framework\Registry')->registry('current_category');
+$subcats = $category->getChildrenCategories();
+//
+//foreach($subcats as $catData){
+//  // echo $catData->getName()."--Id=".$catData->getId()."<br>";
+//   $subsubcat=$catData->getChildrenCategories($catData->getId());
+//   if(strtolower($catData->getName())== 'years'){
+//       foreach($subsubcat as $subsubcatd){
+//       //echo $subsubcatd->getName()."--Id subct=".$subsubcatd->getId()."<br>";
+//   }
+//   
+//   }
+//   
+//}
+//get year dropdown
+$arrYear='';
+foreach($block->getYearAttribute() as $year){
+    $arrYear[]=trim($year->getData('year')) ;
+}
+$temp = array();
+foreach( $arrYear as $key=>$item){
+    //echo "key---".$key."--item--".$item;
+    
+ if(!in_array($item, $temp)){
+      // echo $item;
+       $temp[] = $item;
+ }
+}
+//get model number dropdown
+foreach($block->getModelAttribute() as $model){
+    $arrModel[]=trim($model->getData('model')) ;
+}
+$arrTempModel = array();
+foreach( $arrModel as $key=>$item){
+    //echo "key---".$key."--item--".$item;
+    
+ if(!in_array($item, $arrTempModel)){
+      // echo $item;
+       $arrTempModel[] = $item;
+ }
+}
+//echo "<pre>";
+//print_r($arrTempModel);
+//echo "<pre>";
+?>
+<div class="row searchtitlte">
+    <div class="col-lg-12">
+        <div class="col-lg-offset-3 col-sm-offset-3 col-sm-6 col-lg-6">
+                  <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('seach_module_text')->toHtml();?>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12 catproductsearchform">
+    <div class="col-lg-offset-3 col-sm-offset-3 col-sm-6 col-lg-6">
+        <form action="" method="post" name="ProductSearchform" id="ProductSearchformCat">
+        <div class="col-sm-6 col-lg-6 col-xs-12 styled-select">
+            <?php $dataProduct= $block->getProductCollectionByCategories($category->getId());      
+            
+           //$subCatee=$block->getModelNumber($category->getId());
+          // print_r($subCatee);
+          // echo "test page"
+            ?>
+            <div class="custom-select">
+                <input type="hidden" value="<?php echo $category->getId(); ?>" name="catId" id="catId">
+                <select name="model" class="selectbox" id="productModel">
+                <option value="model">Model</option>
+                  <?php 
+//                  foreach ($arrTempModel as $att ){
+//                if($att==''){
+//                    continue;
+//                }else{
+//                      // echo "<option>".$att."</option>";
+//                }
+//            }
+//            
+            ?>
+              <?php 
+              
+              foreach($subcats as $catData){
+  // echo $catData->getName()."--Id=".$catData->getId()."<br>";
+   $subsubcat=$catData->getChildrenCategories($catData->getId());
+   if(strtolower($catData->getName())== 'model'){
+       foreach($subsubcat as $subsubcatd){
+             echo "<option value=".$subsubcatd->getId().">".$subsubcatd->getName()."</option>";
+       //echo $subsubcatd->getName()."--Id subct=".$subsubcatd->getId()."<br>";
+   }
+   
+   }
+   
+}
+              ?>  
+                
+                
+<!--            <option>Chevrolet</option>
+            <option>Chevrolet/GMC</option>
+            <option>Chevy</option>
+            <option>Chevy/GMC</option>
+            <option>Dodge</option>
+            <option>Dodge Ram</option>
+            <option>Ford</option>
+            <option>GMC</option>
+            <option>Jeep</option>
+            <option>Toyota</option>
+            <option>Various</option>-->
+        </select>
+            </div>
+            </div>
+        <div class="col-sm-6 col-sm-6 col-xs-12 styled-select">
+            <div class="custom-select">
+                <select name="year" class="selectbox" id="productYear">
+            <option value="year">Year</option>
+            <?php 
+            
+//            foreach ($temp as $att ){
+//                if($att==''){
+//                    continue;
+//                }else{
+//                      // echo "<option>".$att."</option>";
+//                }
+//            }
+//            
+                          foreach($subcats as $catData){
+  // echo $catData->getName()."--Id=".$catData->getId()."<br>";
+   $subsubcat=$catData->getChildrenCategories($catData->getId());
+   if(strtolower($catData->getName())== 'years'){
+       $dataInarr=array();
+       foreach($subsubcat as $subsubcatd){
+           $dataInarr[]=array('catId'=>$subsubcatd->getId(),'catName'=>$subsubcatd->getName());
+           //  echo "<option value=".$subsubcatd->getId().">".$subsubcatd->getName()."</option>";
+       //echo $subsubcatd->getName()."--Id subct=".$subsubcatd->getId()."<br>";
+ 
+             }
+              foreach(array_reverse($dataInarr) as $subsubcatd){
+                  echo "<option value=".$subsubcatd['catId'].">".$subsubcatd['catName']."</option>";
+              }
+//             echo "<pre>";
+//             print_r(array_reverse($dataInarr));
+//              echo "</pre>";
+   
+   }
+   
+}
+            ?>
+            <!--<option>2000-2006</option>
+            <option>2001-2002</option>
+            <option>2001-2007</option>
+            <option>2002-2005</option>
+            <option>2002-2008</option>
+            <option>2003-2005</option>
+            <option>2003-2006</option>
+            <option>2003-2007</option>
+            <option>2003-2008</option>
+            <option>2003-2009</option>
+            <option>2004-2005</option>
+            <option>2004-2006</option>
+            <option>2004-2008</option>
+            <option>2004-2016</option>
+            <option>2005-2007</option>
+            <option>2005-2015</option>
+            <option>2006-2008</option>
+            <option>2006-2009</option>
+            <option>2007-2011</option>
+            <option>2007-2013</option>
+            <option>2007-2014</option>
+            <option>2007-2016</option>
+            <option>2007-2010</option>
+            <option>2006-2013</option>
+            <option>2006-2014</option>-->
+        </select>
+        </div>
+        </div>
+        <div class="col-sm-12 col-xs-12 text-center">
+            <input type="button" value="submit" class="btn" id="productSearch">
+        </div>
+    </form>
+    </div>
+</div>
+<div id="search-overlay" class="col-xs-12" style="display: none;">
+    <div class="search-loader"></div>
+</div>
+<?php 
+//$data=$block->getProductByCategories(48);
+//echo $data;
+
+//        if(isset($_SESSION['year'])){
+//         $sessionYear =  $_SESSION['year'];
+//         $_SESSION['catId'];
+//         $_SESSION['modelno'];
+//        }
+?>
+<div class="" id="searchresult" ></div>
+<script>
+    jQuery('.submenu-filter-cat li a').click(function(){
+    var getId= jQuery(this).attr('id');   
+    var useId = jQuery('#catId').val(getId);
+});
+
+jQuery(function() {
+   // alert('test');
+   // //search by session values
+  setTimeout(function() {
+        jQuery("#productSearch").trigger('click');
+    },3);
+    //
+    jQuery('#productSearch').click(function(){
+       var text,text2,text3='';
+        var arrError=[];
+        var isModel = jQuery('#productModel').val();
+        var isYear = jQuery('#productYear').val();
+           if (isModel.toLowerCase() == 'model') {
+            //this.submit();
+            //alert('Please select Model');
+              text2='Please select Model';
+            arrError.push(text2);
+          
+        }
+         if (isYear.toLowerCase() == 'year') {
+            //this.submit();
+            //alert('Please select Year');
+            text3='Please select Year';
+            arrError.push(text3);
+          
+        }
+         var errStr='';
+for (var i = 0; i < arrError.length; i++) {
+   errStr += arrError[i] +'\n';
+}
+if(errStr.length != 0){
+  // jQuery( "#productSearch" ).trigger( "click" ); 
+      alert(errStr);
+    }
+else{
+    var search_url = '<?php echo $this->getUrl("categorysearch/category/filtercat"); ?>';  
+    var data = jQuery('#ProductSearchformCat').serialize();
+       // data += '&lat=' + center.lat + "&lng=" + center.lng;
+        jQuery.ajax({
+            url: search_url,
+            cache: false,
+            type: 'POST',
+            data: data,
+            dataType: 'json',
+            success: function (data) {
+                // var json = jQuery.parseJSON(data);
+                  //alert(json); //it will alert controller data
+              // console.log(data.collection); 
+                //alert('success');
+               // jQuery('.results-wrapper').fadeIn();
+               // jQuery('#map_wrapper').addClass('results-map-wrapper');
+              //  center = data.center;
+               // listDealers(data.collection);
+               // console.log(markers);
+               // console.log(center);
+               // changeMapCenter(center, markers);
+              // console.log('here is result data');
+               jQuery('#searchresult').html(data.collection);
+              // console.log(data);
+            },
+            complete: function () {
+               // alert('complete');
+                jQuery('#search-overlay').hide();
+            },
+            beforeSend: function(){
+                 jQuery('#search-overlay').show();
+            },
+            error:function(xhr, ajaxOptions, thrownError){
+                 alert(xhr.status);
+        alert(thrownError);
+            }
+        });
+   // alert(catId);
+   }
+  
+});
+
+jQuery(document).delegate(".catmenu","click",function(e){
+     e.preventDefault();
+       
+        var getId= jQuery(this).attr('id');   
+    var useId = jQuery('#catId').val(getId);
+  //  alert('test');
+          var text,text2,text3='';
+        var arrError=[];
+        var isModel = jQuery('#productModel').val();
+        var isYear = jQuery('#productYear').val();
+           if (isModel.toLowerCase() == 'model') {
+            //this.submit();
+            //alert('Please select Model');
+              text2='Please select Model';
+            arrError.push(text2);
+          
+        }
+         if (isYear.toLowerCase() == 'year') {
+            //this.submit();
+            //alert('Please select Year');
+            text3='Please select Year';
+            arrError.push(text3);
+          
+        }
+         var errStr='';
+for (var i = 0; i < arrError.length; i++) {
+   errStr += arrError[i] +'\n';
+}
+if(errStr.length == 0){
+   jQuery("#productSearch").trigger( "click" ); 
+    }
+if(errStr.length != 0){
+        alert(errStr);
+    }
+//else{
+//    alert(errStr);
+//}
+        
+//    if(validationForm()){
+//   jQuery( "#productSearch" ).trigger( "click" );
+//    }
+   jQuery('.catmenu').removeClass('active');
+     jQuery( this ).addClass('active');
+});
+});
+    function getCatProducts() {
+        //var zipCode = jQuery('#search_txt').val();
+       // jQuery('#search-overlay').show();
+   
+    }
+   
+    //jQuery( "#productSearch" ).click()
+     //   jQuery("#productSearch").trigger( "click" );
+</script>

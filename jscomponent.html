@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Js component building block</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>Js Component Building block</div>
+       <!-- <div id="component">
+            <button id="default">show default message</button>
+            <button id="success">show success message</button>
+            <button id="error">show error message</button>
+        </div> -->
+       
+       <button id="simple-alert__button--error">show me error alert</button>
+       <section class="demo-section" id="alerts"></section>
+    </body>
+</html>
+<script type="text/javascript">
+    
+    ;(function( window ){
+        'use strict';
+        /*
+         * simple alert function
+         */
+        function extend (a, b){
+            for (var key in b){
+                if(b.hasOwnProperty(key)){
+                    a[key]=b[key];
+                }
+            }
+            return a;
+        }  
+        function simpleAlert( options ){
+            this.options = extend({}, this.options);
+            extend(this.options, options);
+            this._init();
+        }
+        simpleAlert.prototype.options= {
+            wrapper :document.body,
+            type: 'default',
+            message: "Default message"
+        }
+        
+        
+        /*
+         * initialise the message 
+         */
+        
+    simpleAlert.prototype._init = function() {
+    //console.log(this.message);
+    this.sa = document.createElement('div');
+    this.sa.className='simple-alert' + this.options.type;
+    // create html
+    
+    var strinner = "";
+    strinner += '<span class="simple-alert__content>"';
+    strinner += this.options.message;
+    strinner += '</span>';
+    strinner += '<a href="#" class="simple-alert__dismiss">close</a>';
+    this.sa.innerHTML=strinner;
+    this._events();
+    
+    
+    /*this.component = document.getElementById('component');
+    this.box= document.createElement('div');
+    this.box.className='simple-alert';
+    this.box.innerHTML=this.message;
+    this.component.appendChild(this.box);*/
+  };
+  /*
+   * simpleAlert events
+   */
+  
+  simpleAlert.prototype._events = function(){
+      var btn_dismiss = this.sa.querySelector('.simple-alert__dismiss'),
+      self = this;
+      //listen for dismiss
+      btn_dismiss.addEventListener('click', function(e){
+      e.preventDefault();
+      self.dismiss();
+      });
+              
+  };
+  /*
+   * simple alert show
+   * 
+   * 
+   */
+  
+  simpleAlert.prototype.show = function (){
+      this.options.wrapper.appendChild(this.sa);
+  }
+  /*
+   * simple alert dismiss
+   */
+  simpleAlert.prototype.dismiss= function(){
+      this.options.wrapper.removeChild(this.sa);
+  };
+  
+        /*
+         * add simple alert to globle namespance
+         */
+  window.simpleAlert=simpleAlert;
+        
+    })( window );
+    ;(function(){
+    /*
+     * show default
+     */
+    var btn_error = document.getElementById('simple-alert__button--error');
+    btn_error.addEventListener('click',function (e){
+        e.preventDefault();
+        var sa = new simpleAlert({
+            wrapper : document.getElementById('alerts'),
+            type: 'error',
+            message: 'show me an error!'
+        });
+        sa.show();
+        
+        
+        /*var default_alert = new simpleAlert("Hello World");
+        default_alert;*/
+    });
+    
+})();    
+    
+
+</script>

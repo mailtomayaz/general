@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+        <style>
+            body {
+	  font-family: sans-serif;
+          margin:0px;
+          padding:0px;
+}
+
+* {
+	  box-sizing: border-box;
+}
+
+.header-discourse {
+	  background: #181818;
+	  height: 50px;
+	 /* padding-top: 40px;*/
+         position: fixed;
+         width:100%;
+}
+
+.inner {
+	  max-width: 1000px;
+	 /* margin: 0 auto;
+	  padding: 0px 20px;*/
+	  position: relative;
+}
+
+.logo {
+	    text-decoration: none;
+    /* color: #777; */
+    /* font-weight: 800; */
+    /* font-size: 92px; */
+    /* line-height: 45px; */
+    background-color: #eee;
+    overflow: auto;
+    /* height: 50px; */
+    float: left;
+    width: 199px;
+    /* padding: 1%; */
+    text-align: center;
+}
+.inner .logo img{height:46px; padding:2%;}
+
+h1 {
+	  text-align: center;
+	  width: 100%;
+	  margin-top: 120px;
+	  color: #eee;
+	  font-weight: 800;
+	  font-size: 40px;
+}
+
+nav > ul {
+  	float: left;
+        margin:0;
+        padding:0;
+        list-style-type: none;
+    -webkit-margin-after: 0;
+    -webkit-padding-start: 0;
+}
+
+
+nav > ul > li {
+  	    text-align: center;
+    line-height: 50px;
+    /* margin: 0; */
+    padding: 0 5%;
+}
+
+nav > ul li ul li {
+	  width: 100%;
+  	text-align: left;
+            padding: 0 10px;
+}
+
+nav ul li:hover {
+	  cursor: pointer;
+	  position: relative;
+          background-color: #e08f66;
+}
+nav ul li:hover > ul {
+  	display: block;
+}
+nav ul li:hover > a {
+	  color: #fff;
+}
+nav > ul > li > a {
+	  cursor: pointer;
+	  display: block;
+  	outline: none;
+  	width: 100%;
+	  text-decoration: none;
+}
+
+nav > ul > li {
+  	float: left;
+            line-height: 50px;
+    padding: 0 15px;
+}
+nav a {
+	  color: #fff;
+}
+nav > ul li ul {
+  	display: none;
+  	position: absolute;
+  	left: 0;
+	  top: 100%;
+  	width: 200px;
+	  z-index: 2000;
+          background-color: #eee;
+              list-style-type: none;
+    -webkit-padding-start: 0;
+}
+nav > ul li ul li > a {
+	  text-decoration: none;
+          color:#000;
+}
+
+[type="checkbox"], label {
+	  display: none;
+}
+
+@media screen and (max-width: 768px) {
+	nav ul {
+		  display: none;
+                  background-color: #222;
+	}
+
+	label {
+  		display: block;
+  		background: #222;
+		  width: 40px;
+  		height: 40px;
+  		cursor: pointer;
+		  position: absolute;
+		  right: 20px;
+  		top: 0px;
+	}
+        .menu-symble-style {
+  		display: block;
+  		background: #222;
+		  width: 40px;
+  		height: 40px;
+  		cursor: pointer;
+		  position: absolute;
+		  right: 20px;
+  		top: 0px;
+	}
+  
+        .menu-symble-style:after{
+  content:'';
+  display: block;
+  width: 30px;
+  height: 5px;
+  background: #777;
+  margin: 7px 5px;
+  box-shadow: 0px 10px 0px #777, 0px 20px 0px #777
+}
+label:after{
+  content:'';
+  display: block;
+  width: 30px;
+  height: 5px;
+  background: #777;
+  margin: 7px 5px;
+  box-shadow: 0px 10px 0px #777, 0px 20px 0px #777
+}
+
+	[type="checkbox"]:checked ~ ul {
+  		display: block;
+  		z-index: 9999;
+  		position: absolute;
+		  right: 58px;
+		  left: 20px;
+	}
+
+	nav a {
+		  color: #777;
+	}
+        nav ul li ul li a {
+		  color: #777;
+	}
+
+
+	nav ul li {
+		  display: block;
+  		float: none;
+  		width: 100%;
+  		text-align: left;
+  		background: #222;
+		  text-indent: 20px;
+	}
+
+	nav > ul > li {
+  		margin-left: 0px;
+	}
+
+	nav > ul li ul li {
+  		display: block;
+		  float: none;
+	}
+  
+	nav > ul li ul {
+		  display: block;
+  		position: relative;
+  		width: 100%;
+		  z-index: 9999;
+		  float: none;
+	}
+h1 {
+	  font-size: 26px;
+}
+nav ul li:hover {
+	  cursor: pointer;
+	  position: relative;
+          background-color: #222;
+}
+}
+
+        </style>
+    </head>
+    <body>
+       <div class="header-discourse">
+  <div class="inner">
+    <nav>
+      <a href="#" class="logo">  <img src="http://discourse-test.texmetals.com/uploads/default/original/1X/a097e5dc2525ce94385f1801abf1ae0648399b40.png" alt="Texas Precious Metals"></a>
+      <input type="checkbox" id="nav" /><label for="nav"></label>
+      <ul>
+        <li><a href="#">PRODUCTS</a>
+        <ul>
+            <li><a href="https://www.texmetals.com/products/gold-coins" target="_blank">Gold Coins</a></li>
+            <li><a href="https://www.texmetals.com/products/gold-bars" target="_blank">Gold Bars</a></li> 
+            <li><a href="https://www.texmetals.com/products/silver-coins" target="_blank">Silver Coins</a></li> 
+            <li><a href="https://www.texmetals.com/products/silver-bars" target="_blank">Silver Bars</a></li> 
+            <li><a href="https://www.texmetals.com/products/platinum" target="_blank">Platinum</a></li> 
+          </ul>
+        </li>  
+        <li ><a href="https://www.texmetals.com/price-charts/" target="_blank">CHARTS</a></li>
+        <li>
+          <a class="menu-symble-style" href="#">MORE</a>
+          <ul>
+            <li><a href="https://www.texmetals.com/news/category/market-news/" target="_blank" >Market Analysis</a></li>
+           <li><a  href="https://www.texmetals.com/news/category/company-updates/" target="_blank" >Company Updates</a></li>
+           <li><a  href="https://www.texmetals.com/news/category/library/"  target="_blank" >Library</a></li>
+           <li><a  href="https://www.texmetals.com/news/category/infographics/"  target="_blank" >Infographics</a></li>
+            <li><a   href="https://www.texmetals.com/news/category/videos/" target="_blank" >videos</a></li>
+          </ul>
+        </li>
+        
+      </ul>
+    </nav>
+ 
+  </div>
+       </div> 
+        
+        
+
+    </body>
+</html>
